@@ -1,20 +1,20 @@
 package notebook.model.repository.impl;
 
-import notebook.model.dao.impl.FileOperation;
-import notebook.util.mapper.impl.UserMapper;
 import notebook.model.User;
-import notebook.model.repository.GBRepository;
+import notebook.model.dao.Operation;
+import notebook.model.repository.Repository;
+import notebook.util.mapper.Mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class UserRepository implements GBRepository {
-    private final UserMapper mapper;
-    private final FileOperation operation;
+public class UserRepository implements Repository {
+    private final Mapper mapper;
+    private final Operation operation;
 
-    public UserRepository(FileOperation operation) {
-        this.mapper = new UserMapper();
+    public UserRepository(Operation operation, Mapper mapper) {
+        this.mapper = mapper;
         this.operation = operation;
     }
 
@@ -34,7 +34,7 @@ public class UserRepository implements GBRepository {
         long max = 0L;
         for (User u : users) {
             long id = u.getId();
-            if (max < id){
+            if (max < id) {
                 max = id;
             }
         }
@@ -47,11 +47,16 @@ public class UserRepository implements GBRepository {
 
     @Override
     public Optional<User> findById(Long id) {
-        return Optional.empty();
+        List<User> users = findAll();
+        return Optional.of(users.stream()
+                .filter(x -> x.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("User not found")));
     }
 
     @Override
-    public Optional<User> update(Long userId, User update) {
+    public Optional<User> update(Long userId, User update) { //сюда приходит всегда новый юзер из метода createUser() класса ЮзерВью, а значит без id.
+        update.setId(userId); //поэтому здесь засетим Id, который дал пользователь.
         List<User> users = findAll();
         User editUser = users.stream()
                 .filter(u -> u.getId()
@@ -71,7 +76,7 @@ public class UserRepository implements GBRepository {
 
     private void write(List<User> users) {
         List<String> lines = new ArrayList<>();
-        for (User u: users) {
+        for (User u : users) {
             lines.add(mapper.toInput(u));
         }
         operation.saveAll(lines);

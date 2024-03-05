@@ -1,23 +1,26 @@
 package notebook.view;
 
-import notebook.controller.UserController;
+import notebook.controller.Controller;
 import notebook.model.User;
 import notebook.util.Commands;
 
-import java.util.Scanner;
+import java.util.List;
+
+import static notebook.util.Utils.prompt;
 
 public class UserView {
-    private final UserController userController;
+    private final Controller userController;
 
-    public UserView(UserController userController) {
+    public UserView(Controller userController) {
         this.userController = userController;
     }
 
-    public void run(){
+    public void run() {
         Commands com;
 
         while (true) {
-            String command = prompt("Введите команду: ");
+            String command = prompt("Введите команду \"READ, READALL, CREATE, UPDATE, EXIT\": ");
+            System.out.println();
             com = Commands.valueOf(command);
             if (com == Commands.EXIT) return;
             switch (com) {
@@ -35,17 +38,18 @@ public class UserView {
                         throw new RuntimeException(e);
                     }
                     break;
+                case READALL:
+                    List<User> allUsers = userController.findAllUsers();
+                    for(User user : allUsers){
+                        System.out.println(user);
+                        System.out.println();
+                    }
+                    break;
                 case UPDATE:
                     String userId = prompt("Enter user id: ");
-                    userController.updateUser(userId, createUser());
+                    userController.updateUser(userId, createUser()); //todo: почему break не нужен?
             }
         }
-    }
-
-    private String prompt(String message) {
-        Scanner in = new Scanner(System.in);
-        System.out.print(message);
-        return in.nextLine();
     }
 
     private User createUser() {
