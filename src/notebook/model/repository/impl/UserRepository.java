@@ -55,8 +55,8 @@ public class UserRepository implements Repository {
     }
 
     @Override
-    public Optional<User> update(Long userId, User update) { //сюда приходит всегда новый юзер из метода createUser() класса ЮзерВью, а значит без id.
-        update.setId(userId); //поэтому здесь засетим Id, который дал пользователь.
+    public Optional<User> update(Long userId, User update) {
+        update.setId(userId);
         List<User> users = findAll();
         User editUser = users.stream()
                 .filter(u -> u.getId()
