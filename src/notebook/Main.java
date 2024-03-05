@@ -23,7 +23,6 @@ public class Main {
         db.createDB(new ConsoleLogger());
 
         Operation fileOperation = new FileOperation(db.getDbPath());
-
         Mapper userMapper = new UserMapper();
         Repository userRepository = new UserRepository(fileOperation, userMapper);
         Controller userController = new UserController(userRepository);
