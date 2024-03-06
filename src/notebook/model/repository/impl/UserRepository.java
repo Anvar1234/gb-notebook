@@ -73,7 +73,15 @@ public class UserRepository implements Repository {
 
     @Override
     public boolean delete(Long id) {
-        return false;
+        List<User> users = findAll();
+        User editUser = users.stream()
+                .filter(u -> u.getId()
+                        .equals(id))
+                .findFirst().orElseThrow(() -> new RuntimeException("User not found"));
+        if (users.remove(editUser)) {
+            write(users);
+            return true;
+        } else return false;
     }
 
     private void write(List<User> users) {

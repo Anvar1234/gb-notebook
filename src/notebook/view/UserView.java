@@ -19,7 +19,7 @@ public class UserView {
         Commands com;
 
         while (true) {
-            String command = prompt("Введите команду \"READ, READALL, CREATE, UPDATE, EXIT\": ");
+            String command = prompt("Введите команду \"READ, READALL, CREATE, UPDATE, DELETE, EXIT\": ");
             System.out.println();
             com = Commands.valueOf(command);
             if (com == Commands.EXIT) return;
@@ -43,6 +43,12 @@ public class UserView {
                     for (User user : allUsers) {
                         System.out.println(user);
                         System.out.println();
+                    }
+                    break;
+                case DELETE:
+                    String idToDeleted = prompt("Идентификатор пользователя: ");
+                    if(userController.deleteUser(Long.parseLong(idToDeleted))) {
+                        System.out.println("User deleted succefully");
                     }
                     break;
                 case UPDATE:

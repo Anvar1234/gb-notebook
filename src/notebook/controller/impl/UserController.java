@@ -32,4 +32,10 @@ public class UserController implements Controller {
     public List<User> findAllUsers() {
         return repository.findAll();
     }
+
+    @Override
+    public boolean deleteUser(Long id){
+        return repository.delete(id);
+    }
+
 }

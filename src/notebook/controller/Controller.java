@@ -12,4 +12,5 @@ public interface Controller {
      void updateUser(String stringUser);
 
      List<User> findAllUsers();
+     boolean deleteUser(Long id);
 }
