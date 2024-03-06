@@ -21,7 +21,7 @@ public class UserView {
         while (true) {
             String command = prompt("Введите команду \"READ, READALL, CREATE, UPDATE, DELETE, EXIT\": ");
             System.out.println();
-            com = Commands.valueOf(command);
+            com = Commands.valueOf(command.toUpperCase());
             if (com == Commands.EXIT) return;
             switch (com) {
                 case CREATE:
