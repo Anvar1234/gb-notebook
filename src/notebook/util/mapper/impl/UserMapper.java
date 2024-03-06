@@ -10,7 +10,7 @@ public class UserMapper implements Mapper {
     }
 
     @Override
-    public User toOutput(String s) {
+    public User toOutputWithID(String s) {
         String[] lines = s.split(",");
         long id;
         if (isDigit(lines[0])) {
@@ -18,6 +18,12 @@ public class UserMapper implements Mapper {
             return new User(id, lines[1], lines[2], lines[3]);
         }
         throw new NumberFormatException("Id must be a large number");
+    }
+
+    @Override
+    public User toOutputWithoutID(String str) {
+        String[] lines = str.split(",");
+        return new User(lines[0], lines[1], lines[2]);
     }
 
     private boolean isDigit(String s) throws NumberFormatException {

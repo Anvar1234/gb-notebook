@@ -14,8 +14,8 @@ public class UserController implements Controller {
     }
 
     @Override
-    public void saveUser(User user) {
-        repository.create(user);
+    public void saveUser(String stringUser) {
+        repository.create(stringUser);
     }
 
     @Override
@@ -24,8 +24,8 @@ public class UserController implements Controller {
     }
 
     @Override
-    public void updateUser(String userId, User update) {
-        repository.update(Long.parseLong(userId), update);
+    public void updateUser(String stringUser) {
+        repository.update(stringUser);
     }
 
     @Override

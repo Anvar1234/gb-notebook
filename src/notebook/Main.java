@@ -18,7 +18,7 @@ import notebook.view.UserView;
 public class Main {
     public static void main(String[] args) {
 
-        String dbPath = Utils.prompt("Введите путь к БД и наименование вида \" db.txt\": ");
+        String dbPath = Utils.prompt("Введите путь к БД и наименование вида \"db.txt\": ");
         DBCreator db = new DB(dbPath);
         db.createDB(new ConsoleLogger());
 

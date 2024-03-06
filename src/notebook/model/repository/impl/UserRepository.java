@@ -23,13 +23,14 @@ public class UserRepository implements Repository {
         List<String> lines = operation.readAll();
         List<User> users = new ArrayList<>();
         for (String line : lines) {
-            users.add(mapper.toOutput(line));
+            users.add(mapper.toOutputWithID(line));
         }
         return users;
     }
 
     @Override
-    public User create(User user) {
+    public User create(String stringUser) {
+        User user = mapper.toOutputWithoutID(stringUser);
         List<User> users = findAll();
         long max = 0L;
         for (User u : users) {
@@ -55,12 +56,13 @@ public class UserRepository implements Repository {
     }
 
     @Override
-    public Optional<User> update(Long userId, User update) {
-        update.setId(userId);
+    public Optional<User> update(String stringUser) {
+        User update = mapper.toOutputWithID(stringUser);
+
         List<User> users = findAll();
         User editUser = users.stream()
                 .filter(u -> u.getId()
-                        .equals(userId))
+                        .equals(update.getId()))
                 .findFirst().orElseThrow(() -> new RuntimeException("User not found"));
         editUser.setFirstName(update.getFirstName());
         editUser.setLastName(update.getLastName());

@@ -25,7 +25,7 @@ public class UserView {
             if (com == Commands.EXIT) return;
             switch (com) {
                 case CREATE:
-                    User u = createUser();
+                    String u = createUserWithoutID(); //здесь нужен без id
                     userController.saveUser(u);
                     break;
                 case READ:
@@ -40,22 +40,26 @@ public class UserView {
                     break;
                 case READALL:
                     List<User> allUsers = userController.findAllUsers();
-                    for(User user : allUsers){
+                    for (User user : allUsers) {
                         System.out.println(user);
                         System.out.println();
                     }
                     break;
                 case UPDATE:
                     String userId = prompt("Enter user id: ");
-                    userController.updateUser(userId, createUser()); //todo: почему break не нужен?
+                    StringBuilder stringUser = new StringBuilder()
+                            .append(userId)
+                            .append(",")
+                            .append(createUserWithoutID());
+                    userController.updateUser(stringUser.toString()); //todo: почему break не нужен?
             }
         }
     }
 
-    private User createUser() {
+    private String createUserWithoutID() {
         String firstName = prompt("Имя: ");
         String lastName = prompt("Фамилия: ");
         String phone = prompt("Номер телефона: ");
-        return new User(firstName, lastName, phone);
+        return String.format("%s,%s,%s", firstName, lastName, phone);
     }
 }
