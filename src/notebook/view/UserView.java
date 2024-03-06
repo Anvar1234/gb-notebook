@@ -25,7 +25,7 @@ public class UserView {
             if (com == Commands.EXIT) return;
             switch (com) {
                 case CREATE:
-                    String u = createUserWithoutID(); //здесь нужен без id
+                    String u = createUserWithoutID();
                     userController.saveUser(u);
                     break;
                 case READ:
@@ -57,7 +57,7 @@ public class UserView {
                             .append(userId)
                             .append(",")
                             .append(createUserWithoutID());
-                    userController.updateUser(stringUser.toString()); //todo: почему break не нужен?
+                    userController.updateUser(stringUser.toString());
             }
         }
     }

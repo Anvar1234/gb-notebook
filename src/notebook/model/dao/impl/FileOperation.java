@@ -28,7 +28,7 @@ public class FileOperation implements Operation {
             //создаем BufferedReader с существующего FileReader для построчного считывания
             BufferedReader reader = new BufferedReader(fr);
             // считаем сначала первую строку
-            String line = reader.readLine(); //todo: для чего считываем отдельно первую строку? Почему сразу все не считать?
+            String line = reader.readLine();
             if (line != null) {
                 lines.add(line);
             }
