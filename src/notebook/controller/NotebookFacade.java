@@ -14,7 +14,7 @@ import notebook.util.mapper.impl.UserMapper;
 import notebook.view.UserView;
 
 public class NotebookFacade {
-    public void run(){
+    public static void run(){
         String dbPath = Utils.prompt("Введите путь к БД и наименование вида \"db.txt\": ");
         DBCreator db = new DB(dbPath);
         db.createDB(new ConsoleLogger());
